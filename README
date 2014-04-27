@@ -41,15 +41,12 @@ NOTES
 
               . /path/to/s.sh
 
-       cd around for a while to build up the db.
-
-       PROFIT!!
-
        Optionally:
               Set $_S_CMD to change the command name (default s).
               Set $_S_DATA to change the datafile (default $HOME/.ssh_hosts).
 
    Tab Completion:
+
        s  supports tab completion. After any number of arguments, press TAB to
        complete on hosts that match each argument. 
 
