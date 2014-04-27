@@ -124,7 +124,7 @@ _easy_ssh() {
 	')"
 
 	  [ $? -gt 0 ] && return
-	  [ "$host" ] && echo "conn $host"
+	  [ "$host" ] && ssh "$host"
   fi
 }
 
