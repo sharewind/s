@@ -1,0 +1,62 @@
+S(1)                             User Commands                            S(1)
+
+
+
+NAME
+       s - easy ssh completion
+
+SYNOPSIS
+       s [-hl] [regex1 regex2 ... regexn]
+
+AVAILABILITY
+       bash, zsh
+
+DESCRIPTION
+
+	   find ssh host by custom alias, ip, server deploy env.  
+
+       ssh hosts that matches ALL of the regexes given on the command line.
+
+OPTIONS
+
+       -h     show a brief help message
+
+       -l     list only
+
+
+EXAMPLES
+       s web         ssh the first match web host 
+
+       s web 103     ssh the first match web host and ip 103 .  
+
+       s web product ssh the first match web on product env.
+
+       s web product 103   ssh the first match web both ip and env.
+
+       s -l web      list all hosts matching web
+
+NOTES
+   Installation:
+       Put something like this in your $HOME/.bashrc or $HOME/.zshrc:
+
+              . /path/to/s.sh
+
+       cd around for a while to build up the db.
+
+       PROFIT!!
+
+       Optionally:
+              Set $_S_CMD to change the command name (default s).
+              Set $_S_DATA to change the datafile (default $HOME/.ssh_hosts).
+
+   Tab Completion:
+       s  supports tab completion. After any number of arguments, press TAB to
+       complete on hosts that match each argument. 
+
+SEE ALSO
+
+       Please file bugs at git@github.com:sharewind/s.git
+
+
+
+s                                January 2014                             S(1)
