@@ -6,8 +6,8 @@
 #   * cd around for a while to build up the db
 #   * PROFIT!!
 #   * optionally:
-#     set $_SSH_CMD in .bashrc/.zshrc to change the command (default z).
-#     set $_SSH_HOSTS in .bashrc/.zshrc to change the datafile (default ~/.ssh_hosts).
+#     set $_EASY_SSH_CMD in .bashrc/.zshrc to change the command (default z).
+#     set $_HOST_ALIAS in .bashrc/.zshrc to change the datafile (default ~/.host_alias).
 #
 # USE:
 #   * s web # ssh web host
@@ -18,15 +18,15 @@ case $- in
 *) echo 'ERROR: s.sh is meant to be sourced, not directly executed.'
 esac
 
-[ -d "${_SSH_HOSTS:-$HOME/.ssh_hosts}" ] && {
-echo "ERROR: s.sh's datafile (${_SSH_HOSTS:-$HOME/.ssh_hosts}) is a directory."
+[ -d "${_HOST_ALIAS:-$HOME/.host_alias}" ] && {
+echo "ERROR: s.sh's datafile (${_HOST_ALIAS:-$HOME/.host_alias}) is a directory."
 }
 
 _easy_ssh() {
 
-	local datafile="${_SSH_HOSTS:-$HOME/.ssh_hosts}"
+	local datafile="${_HOST_ALIAS:-$HOME/.host_alias}"
 
-	# bail out if we don't own ~/.ssh_hosts (we're another user but our ENV is still set)
+	# bail out if we don't own ~/.host_alias (we're another user but our ENV is still set)
 	[ -f "$datafile" -a ! -O "$datafile" ] && return
 
 	format_hosts="$(cat "$datafile"|awk '
@@ -77,7 +77,7 @@ _easy_ssh() {
 		do case "$1" in
 			--) while [ "$1" ]; do shift; local fnd="$fnd $1";done;;
 			-*) local opt=${1:1}; while [ "$opt" ]; do case ${opt:0:1} in
-			h) echo "${_SSH_CMD:-s} [-hl] args" >&2; return;;
+			h) echo "${_EASY_SSH_CMD:-s} [-hl] args" >&2; return;;
 			l) local list=1;;
 			esac; opt=${opt:1}; done;;
 			*) local fnd="$fnd $1";;
@@ -128,7 +128,7 @@ _easy_ssh() {
   fi
 }
 
-alias ${_SSH_CMD:-s}='_easy_ssh 2>&1'
+alias ${_EASY_SSH_CMD:-s}='_easy_ssh 2>&1'
 
 if compctl &> /dev/null; then
 	# zsh tab completion
@@ -141,5 +141,5 @@ if compctl &> /dev/null; then
 
 elif complete &> /dev/null; then
 	# bash tab completion
-	complete -o filenames -C '_easy_ssh --complete "$COMP_LINE"' ${_SSH_CMD:-s}
+	complete -o filenames -C '_easy_ssh --complete "$COMP_LINE"' ${_EASY_SSH_CMD:-s}
 fi
